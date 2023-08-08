@@ -1,0 +1,3 @@
+name, parent, course, section, id, birthdate, gender, address, phoneNumber, email
+SabikHasan, Baba, CSE412, 2, 2019-3-60-108, 2/11/2000, male, mymensingh, 01761899615, sabik@example.com
+SakiAlAmin, Abba, CSE412, 2, 2019-3-60-016, 1/1/2000, male, Rajshahi, 01788888888, saki@example.com

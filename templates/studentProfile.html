@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CampusConnect</title>
+	<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='uploads/campasConnect.ico') }}">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<style>
+		body {
+			background-color: #f2f2f2;
+			font-family: Arial, sans-serif;
+		}
+		.container {
+			background-color: #ffffff;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+		}
+		h2 {
+			text-align: center;
+			margin-bottom: 30px;
+		}
+	</style>
+</head>
+<body>
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Open Student Profile</button>
+
+	<div class="modal" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Student Profile</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-6">
+								<p><strong>Name:</strong> John Doe</p>
+								<p><strong>Parent:</strong> Jane Doe</p>
+								<p><strong>Course:</strong> Computer Science</p>
+								<p><strong>Section:</strong> CS-101</p>
+								<p><strong>ID:</strong> 123456</p>
+							</div>
+							<div class="col-md-6">
+								<p><strong>Birthdate:</strong> January 1, 2000</p>
+								<p><strong>Gender:</strong> Male</p>
+								{% if 'student' in session['username'] %}
+                    				<!-- Add Student button is conditionally hidden for students -->
+                				{% else %}
+									<p><strong>Address:</strong> 123 Main St, Anytown USA</p>
+                				{% endif %}
+								
+								{% if 'student' in session['username'] %}
+                    				<!-- Add Student button is conditionally hidden for students -->
+                				{% else %}
+								<p><strong>Phone Number:</strong> 555-1234</p>
+                				{% endif %}
+								
+								<p><strong>Email:</strong> john.doe@email.com</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/teacher.css">
+    <script src="static/js/dashboard.js"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='uploads/campasConnect.ico') }}">
+    <title>CampusConnect</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        #add-button {
+            display: block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        #add-button:hover {
+            background-color: #45a049;
+        }
+
+        #dashboard {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        #dashboard:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <h2>Teacher List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Teacher Name</th>
+                    <th>Teacher Recognition</th>
+                    <th>ID</th>
+                    <th>Birthdate</th>
+                    <th>Gender</th>
+                    <th>Address</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in teacher_data %}
+                <tr>
+
+                    <td>{{ item['name'] }}</td>
+
+
+                    <td>{{ item['reco'] }}</td>
+                    <td>{{ item['id'] }}</td>
+                    <td>{{ item['birthdate'] }}</td>
+                    <td>{{ item['gender'] }}</td>
+                    <td>{{ item['address'] }}</td>
+                    <td>{{ item['phone'] }}</td>
+
+                    <td>{{ item['email'] }}</td>
+                    <td><a href="{{ url_for('view_routine', filename=item['routine']) }}" target="_blank">View Routine</a></td>
+
+
+
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+        <button id="add-button" data-target="">ADD Teacher</button>
+
+        <button id="dashboard" data-target="">Dashboard</button>
+    </div>
+
+    <script>
+
+        document.getElementById('add-button').addEventListener('click', function () {
+            window.location.href = '/addTeacher'; // Replace '/addTeacher' with the desired URL
+        });
+
+        document.getElementById('dashboard').addEventListener('click', function () {
+            window.location.href = '/dashboard'; // Replace '/addTeacher' with the desired URL
+        });
+
+        const addButtonList = document.querySelectorAll('.add-button');
+        addButtonList.forEach(button => {
+            button.addEventListener('click', function () {
+                const name = this.dataset.name;
+                const email = this.dataset.email;
+                window.location.href = `/teacher?name=${name}&email=${email}`;
+            });
+        });
+
+        function showw() {
+            var name = document.getElementById("name").value;
+            localStorage.setItem("textvalue", name);
+            return false;
+
+            var email = document.getElementById("email").value;
+            localStorage.setItem("textvalue1", email);
+            return false;
+        }
+    </script>
+</body>
+
+</html>

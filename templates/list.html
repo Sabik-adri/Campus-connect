@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='uploads/campasConnect.ico') }}">
+    <title>CampusConnect</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var listCount = 0;
+
+            $('#addListButton').click(function() {
+                listCount++;
+                var listItem = $('<li>').text('List ' + listCount);
+                $('#listContainer').append(listItem);
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>List Example</h2>
+    <button id="addListButton">Add List</button>
+    <ul id="listContainer">
+        <!-- Lists will be dynamically added here -->
+    </ul>
+</body>
+</html>

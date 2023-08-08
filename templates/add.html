@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='uploads/campasConnect.ico') }}">
+<title>Add Data</title>
+</head>
+<body>
+<h1>Add Data</h1>
+<form method="POST" action="{{ url_for('add') }}">
+<label for="name">Name:</label>
+<input type="text" id="name" name="name">
+<label for="email">Email:</label>
+<input type="email" id="email" name="email">
+<button type="submit">Add</button>
+</form>
+</body>
+</html>

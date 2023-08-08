@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/examMarks.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='uploads/campasConnect.ico') }}">
+    <title>CampusConnect</title>
+</head>
+<body>
+    <header>
+        <h1 style="margin:0;">CampusConnect</h1>
+    </header>
+    <div class="wrapper">
+        <div class="sidebar">
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('courses') }}">Courses</a></li>
+                {% if 'student' in session['username'] %}
+                <!-- Add Student button is conditionally hidden for students -->
+                {% else %}
+                <li><a href="{{ url_for('add_student') }}">Add Student</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('student') }}">Student</a></li>
+                <li><a href="{{ url_for('teacher') }}">Teacher</a></li>
+
+                {% if 'admin' in session['username'] or 'student' in session['username'] %}
+                <li><a href="{{ url_for('sheet_info') }}">Sheets</a></li>
+                
+                {% else %}
+                <li><a href="{{ url_for('attendance') }}">Attendance</a></li>
+                {% endif %}
+
+
+                {% if 'admin' in session['username'] or 'student' in session['username']%}
+
+                {% else %}
+                <li><a href="{{ url_for('exam_marks') }}">Exam Marks</a></li>
+                {% endif %}
+
+                {% if 'admin' in session['username'] %}
+                <li><a href="{{ url_for('user_list') }}">User List</a></li>
+                {% else %}
+                
+                {% endif %}
+                <li class="logout"><a href="{{ url_for('logout') }}">Log Out</a></li>
+            </ul>
+
+        </div>
+        <div class="main">
+            {% if url1 %}
+            <iframe src="{{ url1 }}" frameborder="0" width="100%" height="100%"></iframe>
+            {% endif %}
+        </div>
+        
+    </div>
+    
+    <script>
+        // Get reference to the iframe and update link button
+        var iframe = document.querySelector('iframe');
+        var updateLinkBtn = document.getElementById('update-link-btn');
+
+        // Add event listener to update link button
+        updateLinkBtn.addEventListener('click', function() {
+            // Prompt user for new URL and update iframe source
+            var newUrl = prompt('Enter the new URL for the iframe:');
+            iframe.src = newUrl;
+        });
+    </script>
+    
+</body>
+</html>

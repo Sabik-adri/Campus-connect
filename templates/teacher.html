@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusConnect - Teacher</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/teacher.css') }}">
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='uploads/campasConnect.ico') }}">
+</head>
+
+<body>
+    <header>
+        <h1>CampusConnect</h1>
+    </header>
+    <div class="wrapper">
+        <div class="sidebar">
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('courses') }}">Courses</a></li>
+                {% if 'student' in session['username'] %}
+                <!-- Add Student button is conditionally hidden for students -->
+                {% else %}
+                <li><a href="{{ url_for('add_student') }}">Add Student</a></li>
+                {% endif %}
+                {% if 'student' in session['username'] %}
+                <!-- Add Student button is conditionally hidden for students -->
+                {% else %}
+                <li><a href="{{ url_for('student') }}">Student</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('teacher') }}">Teacher</a></li>
+
+                {% if 'admin' in session['username'] or 'student' in session['username'] %}
+                <li><a href="{{ url_for('sheet_info') }}">Sheets</a></li>
+                
+                {% else %}
+                <li><a href="{{ url_for('attendance') }}">Attendance</a></li>
+                {% endif %}
+
+
+                {% if 'admin' in session['username'] or 'student' in session['username']%}
+
+                {% else %}
+                <li><a href="{{ url_for('exam_marks') }}">Exam Marks</a></li>
+                {% endif %}
+
+                {% if 'admin' in session['username'] %}
+                <li><a href="{{ url_for('user_list') }}">User List</a></li>
+                {% else %}
+                
+                {% endif %}
+                <li class="logout"><a href="{{ url_for('logout') }}">Log Out</a></li>
+            </ul>
+
+        </div>
+        <div class="main">
+            <h2>Teacher List</h2>
+            <table class="teacher-table">
+                <thead>
+                    <tr>
+                        <th>Teacher Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in teacher_data %}
+                    <tr>
+                        <td>{{ item['name'] }}</td>
+                        <td>{{ item['email'] }}</td>
+                        <td><button onclick="showRoutine()" class="routine-btn">View Routine</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+
+            </table>
+
+            {% if 'student' not in session['username'] and 'teacher' not in session['username'] %}
+            
+            {% endif %}
+            {% if 'admin' in session['username'] %}
+            <button class="add-teacher-btn" onclick="goToStudent()">Add Teacher</button>
+            {% else %}
+                
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <!-- Pop-up window for routine -->
+    <div id="routine-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn" onclick="hideRoutine()">&times;</span>
+            <h3>Teacher Routine</h3>
+            <p>Here's the routine for <span class="teacher-name-popup"></span>:</p>
+            <img src="{{ url_for('static', filename='uploads/routine.jpg') }}" alt="Teacher Routine">
+        </div>
+    </div>
+
+    <script>
+        // Function to show routine pop-up window
+        function showRoutine() {
+            var popup = document.getElementById("routine-popup");
+            popup.style.display = "block";
+
+            // Get the teacher's name from the table row that was clicked
+            var teacherName = event.target.parentElement.parentElement.querySelector("td:first-child").textContent;
+
+            // Set the teacher's name in the popup window
+            var teacherNamePopup = document.querySelector(".teacher-name-popup");
+            teacherNamePopup.textContent = teacherName;
+        }
+
+
+        // Function to hide routine pop-up window
+        function hideRoutine() {
+            var popup = document.getElementById("routine-popup");
+            popup.style.display = "none";
+        }
+
+        function goToStudent() {
+            // Replace "pageURL" with the URL of the page you want to navigate to
+            window.location.href = "teacherDB";
+        }
+
+
+    </script>
+</body>
+
+</html>

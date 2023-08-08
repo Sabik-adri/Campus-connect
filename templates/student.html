@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='uploads/campasConnect.ico') }}">
+    <title>CampusConnect</title>
+</head>
+
+<body>
+    <header>
+        <h1 style="margin:0;">CampusConnect</h1>
+    </header>
+    <div class="wrapper">
+        <div class="sidebar">
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('courses') }}">Courses</a></li>
+                {% if 'student' in session['username'] %}
+                <!-- Add Student button is conditionally hidden for students -->
+                {% else %}
+                <li><a href="{{ url_for('add_student') }}">Add Student</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('student') }}">Student</a></li>
+                <li><a href="{{ url_for('teacher') }}">Teacher</a></li>
+
+                {% if 'admin' in session['username'] or 'student' in session['username'] %}
+                <li><a href="{{ url_for('sheet_info') }}">Sheets</a></li>
+                
+                {% else %}
+                <li><a href="{{ url_for('attendance') }}">Attendance</a></li>
+                {% endif %}
+
+
+                {% if 'admin' in session['username'] or 'student' in session['username']%}
+
+                {% else %}
+                <li><a href="{{ url_for('exam_marks') }}">Exam Marks</a></li>
+                {% endif %}
+
+                {% if 'admin' in session['username'] %}
+                <li><a href="{{ url_for('user_list') }}">User List</a></li>
+                {% else %}
+                
+                {% endif %}
+                <li class="logout"><a href="{{ url_for('logout') }}">Log Out</a></li>
+            </ul>
+
+        </div>
+        <div class="main">
+            <h2>Student List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Student Email</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in student_data %}
+                    <tr>
+                        <td>{{ item['name'] }}</td>
+                        <td>{{ item['email'] }}</td>
+                        <td><button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#myModal{{ item['id'] }}">Profile</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% for item in student_data %}
+<div class="modal" id="myModal{{ item['id'] }}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Student Profile</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Name:</strong> {{ item['name'] }}</p>
+                            <p><strong>Parent:</strong> {{ item['parent'] }}</p>
+                            <p><strong>Course:</strong> {{ item['course'] }}</p>
+                            <p><strong>Section:</strong> {{ item['section'] }}</p>
+                            <p><strong>ID:</strong> {{ item['id'] }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Birthdate:</strong> {{ item['birthdate'] }}</p>
+                            <p><strong>Gender:</strong> {{ item['gender'] }}</p>
+                            {% if 'student' not in session['username'] %}
+                            <p><strong>Address:</strong> {{ item['address'] }}</p>
+                            <p><strong>Phone Number:</strong> {{ item['phone'] }}</p>
+                            {% endif %}
+                            <p><strong>Email:</strong> {{ item['email'] }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+</body>
+
+</html>

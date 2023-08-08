@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/courses.css') }}">
+    <script src="{{ url_for('static', filename='js/courses.js') }}"></script>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='uploads/campasConnect.ico') }}">
+    <title>CampusConnect</title>
+    <script>
+        function goToaddCourse() {
+            // Replace "pageURL" with the URL of the page you want to navigate to
+            window.location.href = "addCourse";
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1 style="margin:0;">CampusConnect</h1>
+    </header>
+    <div class="wrapper">
+        <div class="sidebar">
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('courses') }}">Courses</a></li>
+                {% if 'student' in session['username'] %}
+                <!-- Add Student button is conditionally hidden for students -->
+                {% else %}
+                <li><a href="{{ url_for('add_student') }}">Add Student</a></li>
+                {% endif %}
+                {% if 'student' in session['username'] %}
+                <!-- Add Student button is conditionally hidden for students -->
+                {% else %}
+                <li><a href="{{ url_for('student') }}">Student</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('teacher') }}">Teacher</a></li>
+
+                {% if 'admin' in session['username'] or 'student' in session['username'] %}
+                <li><a href="{{ url_for('sheet_info') }}">Sheets</a></li>
+                
+                {% else %}
+                <li><a href="{{ url_for('attendance') }}">Attendance</a></li>
+                {% endif %}
+
+
+                {% if 'admin' in session['username'] or 'student' in session['username']%}
+
+                {% else %}
+                <li><a href="{{ url_for('exam_marks') }}">Exam Marks</a></li>
+                {% endif %}
+
+                {% if 'admin' in session['username'] %}
+                <li><a href="{{ url_for('user_list') }}">User List</a></li>
+                {% else %}
+                
+                {% endif %}
+                <li class="logout"><a href="{{ url_for('logout') }}">Log Out</a></li>
+            </ul>
+
+        </div>
+        <div class="main">
+            <div class="container">
+                <div class="line"></div>
+                <div class="title">Courses
+                    <div class="dropdown">
+                    {% if 'student' in session['username'] %}
+                        <!-- Add Student button is conditionally hidden for students -->
+                    {% else %}
+                        <button onclick="goToaddCourse()" class="dropbtn">Required Courses</button>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="line"></div>
+            <table>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Course ID</th>
+                    <th>Section</th>
+                    <th>Faculty</th>
+                    <th>Time Slot</th>
+                    <th>Prerequisite</th>
+                </tr>
+                <tbody>
+                    {% for item in course_data %}
+                    <tr>
+                        <td>{{ item['name'] }}</td>
+                        <td>{{ item['id'] }}</td>
+                        <td>{{ item['section'] }}</td>
+                        <td>{{ item['faculty'] }}</td>
+                        <td>{{ item['tslot'] }}</td>
+                        <td>{{ item['pre'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+
+    
+</body>
+
+</html>

@@ -24,7 +24,7 @@
                 {% if 'student' in session['username'] %}
                 <!-- Add Student button is conditionally hidden for students -->
                 {% else %}
-                <li><a href="{{ url_for('add_student') }}">Add Student</a></li>
+                <li><a href="{{ url_for('add_student') }}"  id="student">Add Student</a></li>
                 {% endif %}
 
                 {% if 'student' in session['username'] %}

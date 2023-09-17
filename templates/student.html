@@ -29,7 +29,7 @@
                 <li><a href="{{ url_for('add_student') }}">Add Student</a></li>
                 {% endif %}
                 <li><a href="{{ url_for('student') }}">Student</a></li>
-                <li><a href="{{ url_for('teacher') }}">Teacher</a></li>
+                <li><a href="{{ url_for('teacher') }}" id="teacher1">Teacher</a></li>
 
                 {% if 'admin' in session['username'] or 'student' in session['username'] %}
                 <li><a href="{{ url_for('sheet_info') }}">Sheets</a></li>
